@@ -52,37 +52,37 @@ const update = () => {
 update()
 
 // GET ON THE ELEVATOR
-window.addEventListener('scroll', () => {
-  document.body.style.setProperty('--scroll',window.pageYOffset / (document.body.offsetHeight - window.innerHeight));
-}, false);
+// window.addEventListener('scroll', () => {
+//   document.body.style.setProperty('--scroll',window.pageYOffset / (document.body.offsetHeight - window.innerHeight));
+// }, false);
 
-const elevator = document.querySelector('.elevator');
-const elevatorL = document.querySelector('.elevatorL');
-const elevatorR = document.querySelector('.elevatorR');
+// const elevator = document.querySelector('.elevator');
+// const elevatorL = document.querySelector('.elevatorL');
+// const elevatorR = document.querySelector('.elevatorR');
 
-// Create the observer, same as before:
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
+// // Create the observer, same as before:
+// const observer = new IntersectionObserver(entries => {
+//   entries.forEach(entry => {
     
-    if (entry.isIntersecting) {
+//     if (entry.isIntersecting) {
       
-      elevator.classList.add('elevator-transition');
-            elevatorL.classList.add('elevatorL-transition');
-      elevatorR.classList.add('elevatorR-transition');
+//       elevator.classList.add('elevator-transition');
+//             elevatorL.classList.add('elevatorL-transition');
+//       elevatorR.classList.add('elevatorR-transition');
 
-      return;
-    }
+//       return;
+//     }
 
-    elevator.classList.remove('elevator-transition');
-    elevatorL.classList.remove('elevatorL-transition');
-    elevatorR.classList.remove('elevatorR-transition');
+//     elevator.classList.remove('elevator-transition');
+//     elevatorL.classList.remove('elevatorL-transition');
+//     elevatorR.classList.remove('elevatorR-transition');
 
-  });
-});
+//   });
+// });
 
-observer.observe(document.querySelector('.elevator'));
-observer.observe(document.querySelector('.elevatorL'));
-observer.observe(document.querySelector('.elevatorR'));
+// observer.observe(document.querySelector('.elevator'));
+// observer.observe(document.querySelector('.elevatorL'));
+// observer.observe(document.querySelector('.elevatorR'));
 
 
 // time recorder ayyur
