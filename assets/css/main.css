@@ -939,7 +939,7 @@
   font-size: 11px;
   letter-spacing: 0.05em;
   cursor: pointer;
-  transition: #444 0.2s, #888 0.2s, #1a1a1a 0.2s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
 .contact-tab:hover {
@@ -960,7 +960,6 @@
   align-items: center;
   gap: 6px;
   margin-top: 10px;
-  margin-bottom: 5px;
   padding: 6px 12px;
   border: 1px solid #0a66c2;
   border-radius: 4px;
@@ -968,7 +967,7 @@
   font-size: 11px;
   letter-spacing: 0.08em;
   text-decoration: none;
-  transition: #1a1a1a 0.2s, #525252 0.2s;
+  transition: background 0.2s, color 0.2s;
   width: fit-content;
 }
 
@@ -1007,6 +1006,48 @@
 
 .booking-fields.visible {
   display: block;
+}
+
+.email-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 6px 12px;
+  border: 1px solid #b45309;
+  border-radius: 4px;
+  color: #b45309;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  width: fit-content;
+}
+
+.email-btn:hover {
+  background: #b45309;
+  color: #fff;
+}
+
+.phone-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 6px 12px;
+  border: 1px solid #16a34a;
+  border-radius: 4px;
+  color: #16a34a;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  width: fit-content;
+}
+
+.phone-btn:hover {
+  background: #16a34a;
+  color: #fff;
 }
 
 /* First card in section stack */

@@ -9,43 +9,46 @@ const update = () => {
 
 update()
 
-const scaler = document.getElementsByClassName("scaler")[0];
-const ourPeoplePhoto = document.getElementById("our-people-photo");
-const aboutUsPhoto = document.getElementById("about-us-photo");
-scaler.addEventListener("animationend", listener);
-scaler.addEventListener("animationstart", listener);
-
-let lastEndWidth = null; // width at the last animationend
-let isFirstAnimation = true; // flag for the very first scroll-down
-
-function listener(event) {
-  switch (event.type) {
-    case "animationstart": {
-      const currentWidth = ourPeoplePhoto.clientWidth;
-      if (isFirstAnimation) {
+function setupDynamicAboutUsPhoto() {
+  const scaler = document.getElementsByClassName("scaler")[0];
+  const ourPeoplePhoto = document.getElementById("our-people-photo");
+  const aboutUsPhoto = document.getElementById("about-us-photo");
+  
+  let lastEndWidth = null; // width at the last animationend
+  let isFirstAnimation = true; // flag for the very first scroll-down
+  
+  function listener(event) {
+    switch (event.type) {
+      case "animationstart": {
+        const currentWidth = ourPeoplePhoto.clientWidth;
+        if (isFirstAnimation) {
+          break;
+        }
+        // If the width at start matches the last end width, the photo is growing (scroll up)
+        if (lastEndWidth !== null && currentWidth === lastEndWidth) {
+          aboutUsPhoto.classList.remove("visible"); // process fades out, people shows through
+        }
         break;
       }
-      // If the width at start matches the last end width, the photo is growing (scroll up)
-      if (lastEndWidth !== null && currentWidth === lastEndWidth) {
-        aboutUsPhoto.classList.remove("visible"); // process fades out, people shows through
+      case "animationend": {
+        const currentWidth = ourPeoplePhoto.clientWidth;
+        // Only change to "our process photo" when shrinking
+        // i.e. when the end width is smaller than the last start/end width
+        if (lastEndWidth === null || currentWidth < lastEndWidth) {
+          aboutUsPhoto.classList.add("visible"); // process fades in on top
+        }
+        lastEndWidth = currentWidth;
+        isFirstAnimation = false;
+        break;
       }
-      break;
-    }
-    case "animationend": {
-      const currentWidth = ourPeoplePhoto.clientWidth;
-      // Only change to "our process photo" when shrinking
-      // i.e. when the end width is smaller than the last start/end width
-      if (lastEndWidth === null || currentWidth < lastEndWidth) {
-        aboutUsPhoto.classList.add("visible"); // process fades in on top
-      }
-      lastEndWidth = currentWidth;
-      isFirstAnimation = false;
-      break;
     }
   }
+  scaler.addEventListener("animationend", listener);
+  scaler.addEventListener("animationstart", listener);
 }
 
-// for the contact panels switching
+// CONTACT FORM
+function showHideContactFields() {
 document.querySelectorAll(".contact-tab").forEach(tab => {
   tab.addEventListener("click", () => {
     // Deactivate all tabs and panels
@@ -60,18 +63,51 @@ document.querySelectorAll(".contact-tab").forEach(tab => {
   });
 });
 
-// for booking on the form
-// Show/hide booking fields
-document.getElementById("booking-toggle").addEventListener("change", function () {
-  document.getElementById("booking-fields").classList.toggle("visible", this.checked);
-});
+  document.getElementById("booking-toggle").addEventListener("change", function () {
+    document.getElementById("booking-fields").classList.toggle("visible", this.checked);
+  });
+}
 
-// Cancel clears the form
-document.getElementById("cancel-btn").addEventListener("click", () => {
-  document.querySelector(".app-form").reset();
-  document.getElementById("booking-fields").classList.remove("visible");
-});
+function clearForm() {
+  document.getElementById("cancel-btn").addEventListener("click", () => {
+    document.querySelector(".app-form").reset();
+    document.getElementById("booking-fields").classList.remove("visible");
+  });
+}
 
+function handleFormSubmission() {
+  document.querySelector(".app-form").addEventListener("submit", async function (e) {
+    e.preventDefault(); // stop the page from redirecting at all
+
+    const form = e.target;
+    const data = new FormData(form);
+    const sendBtn = form.querySelector("[type='submit']");
+
+    sendBtn.textContent = "SENDING...";
+    sendBtn.disabled = true;
+
+    try {
+      const response = await fetch("https://formspree.io/f/mreapeko", {
+        method: "POST",
+        body: data,
+        headers: { Accept: "application/json" }
+      });
+
+      if (response.ok) {
+        sendBtn.textContent = "SENT ✓";
+        sendBtn.style.color = "#14532d";
+        form.reset();
+        document.getElementById("booking-fields").classList.remove("visible");
+      } else {
+        sendBtn.textContent = "FAILED — TRY AGAIN";
+        sendBtn.disabled = false;
+      }
+    } catch {
+      sendBtn.textContent = "FAILED — TRY AGAIN";
+      sendBtn.disabled = false;
+    }
+  });
+}
 // GET ON THE ELEVATOR
 // window.addEventListener('scroll', () => {
 //   document.body.style.setProperty('--scroll',window.pageYOffset / (document.body.offsetHeight - window.innerHeight));
@@ -106,7 +142,7 @@ document.getElementById("cancel-btn").addEventListener("click", () => {
 // observer.observe(document.querySelector('.elevatorR'));
 
 
-// time recorder ayyur
+// time recorder
 function initDynamicCurrentTime() {
   const defaultTimezone = "Europe/Amsterdam";
 
@@ -162,7 +198,11 @@ function initDynamicCurrentTime() {
   setInterval(updateTime, 1000);
 }
 
-// Initialize Dynamic Current Time
+// Initialize all functions reliant on DOM
 document.addEventListener("DOMContentLoaded", () => {
   initDynamicCurrentTime();
+  setupDynamicAboutUsPhoto();
+  showHideContactFields();
+  clearForm();
+  handleFormSubmission();
 });
