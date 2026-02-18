@@ -1,55 +1,76 @@
-// import Grid1Background from 'https://cdn.jsdelivr.net/npm/threejs-components@0.0.16/build/backgrounds/grid1.cdn.min.js';
-
-// const bg = Grid1Background(document.getElementById('webgl-canvas'))
-
-
-// const color = 0x48577D;
-
-// // Set grid colors
-// bg.grid.setColors([color, color, color]);
-
-// // Set lights to the same color
-// bg.grid.light1.color.set(color);
-// bg.grid.light1.intensity = 2; // pick a fixed intensity
-// bg.grid.light2.color.set(color);
-// bg.grid.light2.intensity = 1;
-
-// bg.renderer.setPixelRatio(1);
-// bg.renderer.setSize(window.innerWidth * 0.75, window.innerHeight * 0.75);
-
-// Newsletter issue: https://craftofui.substack.com/p/scrolling-a-page-out-of-the-playbook
-
-import gsap from 'https://cdn.skypack.dev/gsap@3.12.0'
-import ScrollTrigger from 'https://cdn.skypack.dev/gsap@3.12.0/ScrollTrigger'
-
-const hasScrollSupport = CSS.supports(
-  '(animation-timeline: view()) and (animation-range: 0 100%)'
-)
-
-const config = {
-  theme: 'system',
-  enhanced: true,
-  stick: true,
-  layers: true,
-  center: true,
-  stagger: 'range',
-}
-
-if (!hasScrollSupport) {
-  gsap.registerPlugin(ScrollTrigger)
-  console.info('GSAP ScrollTrigger registered')
-}
-
 const update = () => {
-  document.documentElement.dataset.theme = config.theme
-  document.documentElement.dataset.enhanced = config.enhanced
-  document.documentElement.dataset.stick = config.stick
-  document.documentElement.dataset.center = config.center
-  document.documentElement.dataset.layers = config.layers
-  document.documentElement.dataset.stagger = config.stagger
+  document.documentElement.dataset.theme = 'system';
+  document.documentElement.dataset.enhanced = true;
+  document.documentElement.dataset.stick = true;
+  document.documentElement.dataset.center = true;
+  document.documentElement.dataset.layers = true;
+  document.documentElement.dataset.stagger = 'range';
 }
 
 update()
+
+const scaler = document.getElementsByClassName("scaler")[0];
+const ourPeoplePhoto = document.getElementById("our-people-photo");
+const aboutUsPhoto = document.getElementById("about-us-photo");
+scaler.addEventListener("animationend", listener);
+scaler.addEventListener("animationstart", listener);
+
+let lastEndWidth = null; // width at the last animationend
+let isFirstAnimation = true; // flag for the very first scroll-down
+
+function listener(event) {
+  switch (event.type) {
+    case "animationstart": {
+      const currentWidth = ourPeoplePhoto.clientWidth;
+      if (isFirstAnimation) {
+        break;
+      }
+      // If the width at start matches the last end width, the photo is growing (scroll up)
+      if (lastEndWidth !== null && currentWidth === lastEndWidth) {
+        aboutUsPhoto.classList.remove("visible"); // process fades out, people shows through
+      }
+      break;
+    }
+    case "animationend": {
+      const currentWidth = ourPeoplePhoto.clientWidth;
+      // Only change to "our process photo" when shrinking
+      // i.e. when the end width is smaller than the last start/end width
+      if (lastEndWidth === null || currentWidth < lastEndWidth) {
+        aboutUsPhoto.classList.add("visible"); // process fades in on top
+      }
+      lastEndWidth = currentWidth;
+      isFirstAnimation = false;
+      break;
+    }
+  }
+}
+
+// for the contact panels switching
+document.querySelectorAll(".contact-tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    // Deactivate all tabs and panels
+    document.querySelectorAll(".contact-tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".contact-panel").forEach(p => {
+      p.classList.remove("active");
+    });
+
+    // Activate clicked tab and its target panel
+    tab.classList.add("active");
+    document.getElementById(tab.dataset.target).classList.add("active");
+  });
+});
+
+// for booking on the form
+// Show/hide booking fields
+document.getElementById("booking-toggle").addEventListener("change", function () {
+  document.getElementById("booking-fields").classList.toggle("visible", this.checked);
+});
+
+// Cancel clears the form
+document.getElementById("cancel-btn").addEventListener("click", () => {
+  document.querySelector(".app-form").reset();
+  document.getElementById("booking-fields").classList.remove("visible");
+});
 
 // GET ON THE ELEVATOR
 // window.addEventListener('scroll', () => {

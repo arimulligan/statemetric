@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import url("https://unpkg.com/normalize.css") layer(normalize);
+@import url('https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css');
 @font-face {
   font-family: "Montserrat Black";
   src: url("fonts/Montserrat-Black.eot");
@@ -297,14 +298,25 @@
     height: 100%;
   }
 }
+.scaler img.fade-layer {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  .visible {
+    opacity: 1;
+  }
+}
+.scaler img.fade-layer.visible {
+
+    opacity: 1;
+  
+}
 @layer grid {
-  /* it's a 5x3 grid using subgrid, always centered */
   .grid {
     --offset: 0;
     width: 1600px;
     max-width: calc(100% - 2 * var(--gutter));
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: none;
     gap: var(--gap);
     margin: 0 auto;
@@ -315,10 +327,6 @@
     left: 50%;
     translate: -50% -50%;
   }
-  /* .grid img {
-    width: 10vw;
-    height: 12vw;
-  } */
   @media (max-width: 600px) {
     .grid {
       grid-template-columns: repeat(3, 1fr);
@@ -365,6 +373,7 @@
     position: relative;
     grid-area: 2/calc(3 + var(--offset));
     grid-row-start: 1;
+    grid-column: 2 !important;
   }
   .grid img {
     width: 100%;
@@ -614,31 +623,7 @@
   pointer-events: auto; /* make sure mouse works */
 }
 
-/* Overlay inside hover-card */
-.hover-content {
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255);
-  color: black;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 0.5rem;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  pointer-events: none; /* don't block mouse */
-  z-index: 10; /* high enough inside the layer */
-}
-
-.p-hover {
-  text-align: left;
-  font-size: large;
-}
-
-.hover-card:hover .hover-content {
+.hover-card:hover {
   opacity: 1;
   transform: translateY(0);
 }
@@ -671,41 +656,28 @@
   grid-column: main;
 }
 
-.main-sections hr {
-  display: block;
-  margin-block: 4rem;
-  border: 1px solid rgba(204, 204, 204, 0.4);
-  border-width: 1px 0 0;
-}
-
 .side-by-side {
   display: grid;
   grid-auto-flow: dense;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 1em;
 }
 
 .side-by-side__text {
-  grid-column: 2;
+  /* grid-column: 2; */
   margin-trim: block; /* only supported in Firefox 🥺 */
 }
 .side-by-side__text h3 {
   margin-top: 0;
 }
 
-.main-sections p, .main-sections h2, .main-sections h3, .main-sections blockquote, .main-sections hr {
+.main-sections p, .main-sections h3, .grid-container div.card, .card-title, .card-icon {
   /* animation-name: text-appear; @keyframes defined below */
   /* animation-timing-function: ease-in; standard should be linear */
   /* animation-fill-mode: both; keeps animated values forwards and backwards */
   animation: text-appear ease-in both;
   animation-timeline: view(); /* applies animation state relative to viewport */
   animation-range: 0vh 70vh; /* set 0% and 100% positions */
-}
-
-.main-sections img {
-  animation: image-appear ease-in both;
-  animation-timeline: view();
-  animation-range: entry 50% 100vh;
 }
 
 @prefers-reduced-motion {
@@ -929,5 +901,193 @@
 
   .screen-body-item {
     padding: 0;
+  }
+}
+
+/* along with the form for the contact panels */
+.contact-panel {
+  display: none;
+  flex-direction: column;
+  /* flex: 1; */
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.contact-panel.active {
+  display: flex;
+  opacity: 1;
+}
+
+.contact-bottom {
+  margin-top: auto;
+}
+
+.contact-tabs {
+  display: flex;
+  gap: 8px;
+  /* margin-top: auto; */
+  padding-top: 20px;
+}
+
+.contact-tab {
+  flex: 1;
+  padding: 10px 6px;
+  background: #1a1a1a;
+  border: 1px solid #444;
+  border-radius: 6px;
+  color: #888;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: #444 0.2s, #888 0.2s, #1a1a1a 0.2s;
+}
+
+.contact-tab:hover {
+  background: #2a2a2a;
+  color: #ccc;
+  border-color: #666;
+}
+
+.contact-tab.active {
+  background: #2a2a2a;
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+/* for linkedIn button and for submission form */
+.linkedin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  padding: 6px 12px;
+  border: 1px solid #0a66c2;
+  border-radius: 4px;
+  color: #0a66c2;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  transition: #1a1a1a 0.2s, #525252 0.2s;
+  width: fit-content;
+}
+
+.linkedin-btn:hover {
+  background: #0a66c2;
+  color: #fff;
+}
+
+.booking-check {
+  margin-top: 20px;
+}
+
+.app-form-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #888;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+.app-form-label input[type="checkbox"] {
+  accent-color: #ffffff;
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+
+.booking-fields {
+  display: none;
+  margin-top: 10px;
+  border-left: 2px solid #444;
+  padding-left: 15px;
+}
+
+.booking-fields.visible {
+  display: block;
+}
+
+/* First card in section stack */
+.card {
+  --grad: red, blue;
+  padding: 2.5rem;
+  background-image: linear-gradient(to bottom left, #e0e4e5, #f2f6f9);
+  border-radius: 2rem;
+  gap: 1.5rem;
+  display: grid;
+  grid-template: 'title icon' 'content content' 'bar bar' / 1fr auto;
+  box-shadow: 
+    inset -2px 2px hsl(0 0 100% / 1),
+    -20px 20px 40px hsl(0 0 0 / .25) ;
+  z-index: 20;
+  
+  .card-title {
+    font-size: 1.5rem;
+    grid-area: title;
+    align-self: end;
+    text-transform: uppercase;
+    font-weight: 500;
+    word-break: break-all;
+    font-family: "Montserrat Bold";
+  }
+  .card-icon {
+    grid-area: icon;
+    font-size: 3rem;
+    
+    > i {
+      color: transparent;
+      background: linear-gradient(to right, var(--grad));
+      background-clip: text;
+    }
+  }
+  .card-content {
+    grid-area: content;
+    & > *:first-child { margin-top: 0rem}
+    & > *:last-child { margin-bottom: 0rem}
+  }
+  &::after {
+    content: "";
+    grid-area: bar;
+    height: 2px;
+    background-image: linear-gradient(90deg, var(--grad));
+  }
+}
+
+/* Vertical Steps Style */
+.steps-vertical {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 0;
+}
+
+.step-vertical {
+    display: flex;
+    position: relative;
+    padding: 1rem 0;
+}
+
+.step-vertical-icon {
+  padding: 0.5rem;
+
+  img {
+      border-radius: 50%;
+      position: relative;
+      z-index: 2;
+      animation: none !important;
+      border: 10px solid #e9ecef;
+  }
+}
+
+.step-vertical-content {
+  padding-top: 0.5rem;
+
+  h4 {
+    width: 15vw;
+    text-align: justify;
+    width: 15vw;
+    text-align: end;
+    padding-right: 20px;
   }
 }
