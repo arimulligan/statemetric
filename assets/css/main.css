@@ -274,9 +274,6 @@
 .scaler img.fade-layer {
   opacity: 0;
   transition: opacity 0.6s ease;
-  .visible {
-    opacity: 1;
-  }
 }
 .scaler img.fade-layer.visible {
   opacity: 1;
@@ -534,14 +531,13 @@ a[href]:hover {
   padding: 80px;
 }
 
-/* On hover for the process */
 .layer {
-  position: relative; /* stacking context for children */
-  z-index: 1; /* base layer */
+  position: relative;
+  z-index: 1;
 }
 
 .layer:nth-child(2) {
-  z-index: 2; /* top layer */
+  z-index: 2;
 }
 
 /* Not a hover card anymore, just for the Our People section */
@@ -560,9 +556,10 @@ a[href]:hover {
 }
 
 .header--logo div {
-  font-size: 8vh;
+  font-size: 10vw;
   font-weight: 700;
   text-transform: uppercase;
+  font-family: 'MuseoModerno Light';
 }
 
 /* Intro, state metric section, and philosophy */
@@ -769,7 +766,6 @@ a[href]:hover {
   border-bottom: 1px solid #666;
   color: #ddd;
   font-size: 14px;
-  text-transform: uppercase;
   outline: none;
   transition: border-color .2s;
 }
@@ -1139,6 +1135,16 @@ a[href]:hover {
   .lg-screen {
     display: block;
     font-size: medium;
+  }
+
+  .lg-screen.fade-layer {
+    display: block;   /* always in the flow */
+    opacity: 0;       /* hidden by default */
+    transition: opacity 0.6s ease;
+  }
+
+  .lg-screen.fade-layer.visible {
+    opacity: 1;
   }
   .sml-screen {
     display: none;

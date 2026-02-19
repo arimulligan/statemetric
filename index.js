@@ -20,6 +20,7 @@ function setupDynamicAboutUsPhoto() {
   let isFirstAnimation = true; // flag for the very first scroll-down
   
   function listener(event) {
+    console.log(event.type, Date.now(), aboutUsPhoto.classList.toString());
     switch (event.type) {
       case "animationstart": {
         const currentWidth = ourPeoplePhoto.clientWidth;
@@ -36,8 +37,11 @@ function setupDynamicAboutUsPhoto() {
         const currentWidth = ourPeoplePhoto.clientWidth;
         // Only change to "our process photo" when shrinking
         // i.e. when the end width is smaller than the last start/end width
+        console.log("animationend")
         if (lastEndWidth === null || currentWidth < lastEndWidth) {
-          aboutUsPhoto.classList.add("visible"); // process fades in on top
+          console.log("adding visible to:", aboutUsPhoto, aboutUsPhoto.id);
+aboutUsPhoto.classList.add("visible");
+console.log("classes after add:", aboutUsPhoto.classList.toString());
         }
         lastEndWidth = currentWidth;
         isFirstAnimation = false;
