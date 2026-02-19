@@ -87,7 +87,7 @@ function handleFormSubmission() {
     sendBtn.disabled = true;
 
     try {
-      const response = await fetch("https://formspree.io/f/mreapeko", {
+      const response = await fetch("https://formspree.io/f/xvzbqjve", {
         method: "POST",
         body: data,
         headers: { Accept: "application/json" }

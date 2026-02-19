@@ -527,67 +527,6 @@ a[href]:hover {
   background-repeat: no-repeat;
   transition: background-size 0.3s ease;
 }
-  
-/* GET ON THE ELEVATOR */
-/* .elevator-transition {
-  animation: repeat 1s forwards;
-  animation-delay: 1s;
-}
-
-.elevator {
-  margin: 5em 0;
-  color: #000000;
-  font-family: "MuseoModerno Bold";
-  font-size: 3em;
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-gap: 10px;
-  height: 50vh;
-}
-
-.elevatorL {
-  text-align: right;
-  left: 5em;
-}
-
-.elevatorR {
-  left: 10em;
-}
-
-@keyframes repeat {
-  100% {
-    filter: drop-shadow(0 1em 0 #000000) drop-shadow(0 1em 0 #000000) drop-shadow(0 1em 0 #000000) drop-shadow(0 1em 0 #000000) drop-shadow(0 1em 0 #000000) drop-shadow(0 1em 0 #000000);
-  }
-}
-.elevatorL-transition {
-  animation: moveLeft 0.7s forwards;
-  animation-play-state: paused;
-  animation-delay: calc(var(--scroll) * -1s);
-}
-
-.elevatorR-transition {
-  animation: moveRight 0.7s forwards;
-  animation-play-state: paused;
-  animation-delay: calc(var(--scroll) * -1s);
-}
-
-@keyframes moveLeft {
-  0% {
-    transform: translateX(0px) rotate(0);
-  }
-  100% {
-    transform: translateX(-10em);
-  }
-}
-@keyframes moveRight {
-  0% {
-    transform: translateX(0px) rotate(0);
-  }
-  100% {
-    transform: translateX(10em);
-  }
-} */
-
 
 .box {
   background: #000;
