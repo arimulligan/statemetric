@@ -18,9 +18,10 @@ function setupDynamicAboutUsPhoto() {
   
   let lastEndWidth = null; // width at the last animationend
   let isFirstAnimation = true; // flag for the very first scroll-down
+  let manualOverride = false; // track if user has manually toggled
   
   function listener(event) {
-    console.log(event.type, Date.now(), aboutUsPhoto.classList.toString());
+    if (manualOverride) return;
     switch (event.type) {
       case "animationstart": {
         const currentWidth = ourPeoplePhoto.clientWidth;
@@ -39,16 +40,26 @@ function setupDynamicAboutUsPhoto() {
         // i.e. when the end width is smaller than the last start/end width
         console.log("animationend")
         if (lastEndWidth === null || currentWidth < lastEndWidth) {
-          console.log("adding visible to:", aboutUsPhoto, aboutUsPhoto.id);
-aboutUsPhoto.classList.add("visible");
-console.log("classes after add:", aboutUsPhoto.classList.toString());
+          aboutUsPhoto.classList.add("visible");
         }
         lastEndWidth = currentWidth;
         isFirstAnimation = false;
         break;
       }
     }
+
+    // Click toggle — desktop only
+    if (window.innerWidth > 768) {
+      scaler.addEventListener("click", () => {
+        manualOverride = true;
+        aboutUsPhoto.classList.add("visible");
+        aboutUsPhoto.style.cursor = "default";
+      });
+    }
   }
+
+
+
 }
 
 // CONTACT FORM
