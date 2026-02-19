@@ -543,7 +543,7 @@ a[href]:hover {
 /* Not a hover card anymore, just for the Our People section */
 .hover-card {
   position: relative;
-  display: inline-block;
+  display: inherit;
   overflow: hidden;
   pointer-events: auto;
 }
@@ -1127,6 +1127,14 @@ a[href]:hover {
     width: auto;
     text-align: center;
     padding-right: 0;
+  }
+
+  .hover-card h2 {
+    font-size: medium;
+  }
+  .hover-card p {
+    margin-top: 0px !important;
+    font-size: small;
   }
 }
 
