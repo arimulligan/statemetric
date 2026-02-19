@@ -13,6 +13,8 @@ function setupDynamicAboutUsPhoto() {
   const scaler = document.getElementsByClassName("scaler")[0];
   const ourPeoplePhoto = document.getElementById("our-people-photo");
   const aboutUsPhoto = document.getElementById("about-us-photo");
+  scaler.addEventListener("animationend", listener);
+  scaler.addEventListener("animationstart", listener);
   
   let lastEndWidth = null; // width at the last animationend
   let isFirstAnimation = true; // flag for the very first scroll-down
@@ -43,8 +45,6 @@ function setupDynamicAboutUsPhoto() {
       }
     }
   }
-  scaler.addEventListener("animationend", listener);
-  scaler.addEventListener("animationstart", listener);
 }
 
 // CONTACT FORM
