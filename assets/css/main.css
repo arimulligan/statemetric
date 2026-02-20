@@ -1100,6 +1100,14 @@ a[href]:hover {
     font-size: x-large;
     border-radius: 1rem;
   }
+
+  .hover-card h2 {
+    font-size: medium;
+  }
+  .hover-card p {
+    margin-top: 0px !important;
+    font-size: small;
+  }
 }
 
 /* iPhone / small mobile (max ~480px) */
@@ -1129,13 +1137,6 @@ a[href]:hover {
     padding-right: 0;
   }
 
-  .hover-card h2 {
-    font-size: medium;
-  }
-  .hover-card p {
-    margin-top: 0px !important;
-    font-size: small;
-  }
 }
 
 /* computers etc. */
